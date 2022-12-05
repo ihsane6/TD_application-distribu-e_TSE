@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.test.web.servlet.MockMvc;
 import org.tse.TD1.ServiceImplementation.DeveloperService;
 import org.tse.TD1.ServiceImplementation.TaskService;
+import org.tse.TD1.domain.Task;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -52,8 +53,43 @@ public class TaskControllerTest {
 
     }
 
+    @Test
+    public void testtaskpost() throws Exception {
+        Task task = new Task();
+        task.setTitle("tasktest");
+        mvc.perform(post("/tasks")
+                        .content(new ObjectMapper().writeValueAsString(task))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("title", is("tasktest")));
 
 
+    }
+
+    @Test
+    public void testtaskmove() throws Exception {
+        LeftOrRight direction = new LeftOrRight();
+        direction.setTitle("right");
+        mvc.perform(patch("/tasks/1")
+                        .content(new ObjectMapper().writeValueAsString(direction))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("title", is("first_task")))
+                .andExpect(jsonPath("taskStatus.label", is("En train ")));
+
+
+    }
+
+
+    class LeftOrRight{
+        public String title;
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+    }
 
 
 

@@ -12,4 +12,6 @@ public interface TaskService {
     public Task moveRightTask(Task task);
 
     public Task moveLeftTask(Task task);
+
+    public Task addTask(Task task);
 }

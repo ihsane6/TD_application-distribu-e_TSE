@@ -29,6 +29,19 @@ public class MyRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        TaskStatus taskStatus1 = new TaskStatus();
+        TaskStatus taskStatus2 = new TaskStatus();
+        TaskStatus taskStatus3 = new TaskStatus();
+        taskStatus1.setId(1L);
+        taskStatus2.setId(2L);
+        taskStatus3.setId(3L);
+        taskStatus1.setLabel("à faire");
+        taskStatus2.setLabel("En train ");
+        taskStatus3.setLabel("complet");
+
+        taskStatusRepo.save(taskStatus1);
+        taskStatusRepo.save(taskStatus2);
+        taskStatusRepo.save(taskStatus3);
         Developer developer = new Developer();
         developer.setFirstname("ihsane");
         developer.setEmail("ihsane.1@gmail.fr");
@@ -36,8 +49,6 @@ public class MyRunner implements CommandLineRunner {
         developer.setPassword("haisjzk");
         developer.setStartcontract(LocalDate.now());
         ChangeLog changeLog = new ChangeLog();
-        TaskStatus taskStatus = new TaskStatus();
-        taskStatus.setLabel("ok");
         TaskType taskType = new TaskType();
         taskType.setLabel("STRING");
         Task task = new Task();
@@ -46,15 +57,14 @@ public class MyRunner implements CommandLineRunner {
         task.setNbrhourreel(12);
         task.setNbrhoursforcas(24);
         task.setCreated(LocalDate.now());
-        task.setTaskStatus(taskStatus);
+        task.setTaskStatus(taskStatus1);
         task.setTaskType(taskType);
         task.addevelopper(developer);
         changeLog.setTask(task);
-        changeLog.setSourceStatus(taskStatus);
-        changeLog.setTargetStatus(taskStatus);
+        changeLog.setSourceStatus(taskStatus1);
+        changeLog.setTargetStatus(taskStatus1);
         changeLog.setOccured(LocalDate.now());
         developerRepo.save(developer);
-        taskStatusRepo.save(taskStatus);
         taskTypeRepo.save(taskType);
         taskRepo.save(task);
 

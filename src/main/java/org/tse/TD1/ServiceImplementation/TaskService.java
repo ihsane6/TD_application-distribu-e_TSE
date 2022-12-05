@@ -33,6 +33,11 @@ public class TaskService implements org.tse.TD1.ServiceInterface.TaskService {
     }
 
     @Override
+    public Task addTask(Task task) {
+        return taskRepo.save(task);
+    }
+
+    @Override
     public Task moveRightTask(Task task) {
         TaskStatus taskStatus = task.getTaskStatus();
         if (taskStatus.getId() == 1L) {
@@ -42,7 +47,7 @@ public class TaskService implements org.tse.TD1.ServiceInterface.TaskService {
 
         } else {
         }
-        return task;
+        return taskRepo.save(task);
 
     }
 
@@ -56,7 +61,7 @@ public class TaskService implements org.tse.TD1.ServiceInterface.TaskService {
 
         } else {
         }
-        return task;
+        return taskRepo.save(task);
 
 
     }
